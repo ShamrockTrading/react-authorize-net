@@ -19,11 +19,12 @@ const FormInput = styled(Input)(props => ({
     border: '0',
     padding: '0'
   },
-  backgroundColor: '#d4d4d4',
-  borderRadius: '4px',
+  backgroundColor: '#e4e4e4',
+  borderRadius: '4px 4px 0 0',
+  borderBottom: '1px solid #000',
   color: props.valid ? '#666' : '#fff',
   fontFamily: 'inherit',
-  fontSize: '1em',
+  fontSize: '14px',
   height: '1em',
   padding: '1.5em',
   width: '100%'
@@ -36,7 +37,7 @@ const PayButton = styled.button(props => ({
   backgroundColor: '#0083ca',
   borderRadius: '4px',
   color: 'white',
-  fontSize: '1.1em',
+  fontSize: '0.875rem',
   opacity: props.disabled ? 0.9 : 1,
   fontFamily: 'inherit',
   textTransform: 'uppercase',
@@ -243,6 +244,4 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
   )
 }
 
-export default styled(FormComponent)({
-  fontFamily: 'system-ui'
-})
+export default FormComponent
