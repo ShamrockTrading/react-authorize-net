@@ -7,19 +7,10 @@ import {
 } from 'react-icons/fa'
 import { Motion, spring } from 'react-motion'
 import { Box, Flex, Text } from 'rebass'
-import styled, { createGlobalStyle } from 'styled-components'
-
-import robotoFont from 'typeface-roboto/files/roboto-latin-400.woff2'
-
+import styled from 'styled-components'
 import { FormType, InjectedProps } from './FormContainer'
 import Input, { Props } from './Input'
 
-const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: "Roboto";
-    src: url(${robotoFont})
-  }
-`
 const FormInput = styled(Input)(props => ({
   '& input': {
     '&::placeholder': { color: 'inherit' },
@@ -28,10 +19,9 @@ const FormInput = styled(Input)(props => ({
     border: '0',
     padding: '0'
   },
-  backgroundColor: '#7795f8',
-  border: '1px solid #819efc',
+  backgroundColor: '#d4d4d4',
   borderRadius: '4px',
-  color: props.valid ? '#fff' : '#FFC7EE',
+  color: props.valid ? '#666' : '#fff',
   fontFamily: 'inherit',
   fontSize: '1em',
   height: '1em',
@@ -43,15 +33,13 @@ const PayButton = styled.button(props => ({
   '&:hover': {
     cursor: !props.disabled ? 'pointer' : 'not-allowed'
   },
-  backgroundColor: '#f6a4eb',
-  border: '1px solid #2e6da4',
+  backgroundColor: '#0083ca',
   borderRadius: '4px',
-  boxShadow:
-    '0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffb9f6',
   color: 'white',
   fontSize: '1.1em',
   opacity: props.disabled ? 0.9 : 1,
   fontFamily: 'inherit',
+  textTransform: 'uppercase',
   padding: '12px 48px',
   width: '100%'
 }))
@@ -183,12 +171,10 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       style={style && style.form}
       flexWrap="wrap"
       mb={4}
-      bg="#6772e5"
+      bg="#fff"
       p={[3, 5] as any}
       justifyContent="center"
     >
-      <GlobalStyle />
-
       <Box width={[1, 2 / 4]} mb={[3, 0] as any}>
         <CardNumber
           style={style && style.input}
@@ -198,17 +184,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
           focused={props.focused === 'cardNumber'}
           valid={props.validationErrors.cardNumber}
           value={props.values.cardNumber}
-        />
-      </Box>
-      <Box width={[1 / 2, 1 / 4]} pl={[0, 4] as any}>
-        <CardCode
-          style={style && style.input}
-          onFocus={R.curry(props.handleFocus)('cardCode')}
-          onBlur={props.handleBlur}
-          onChange={R.curry(props.handleChange)('cardCode')}
-          focused={props.focused === 'cardCode'}
-          valid={props.validationErrors.cardCode}
-          value={props.values.cardCode}
         />
       </Box>
 
@@ -223,6 +198,19 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
           value={props.values.expDate}
         />
       </Box>
+
+      <Box width={[1 / 2, 1 / 4]} pl={[0, 4] as any}>
+        <CardCode
+          style={style && style.input}
+          onFocus={R.curry(props.handleFocus)('cardCode')}
+          onBlur={props.handleBlur}
+          onChange={R.curry(props.handleChange)('cardCode')}
+          focused={props.focused === 'cardCode'}
+          valid={props.validationErrors.cardCode}
+          value={props.values.cardCode}
+        />
+      </Box>
+
       <Box width={[1, 1 / 2] as any} pt={4}>
         <PayButton
           style={style && style.button}
