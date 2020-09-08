@@ -19,10 +19,9 @@ const FormInput = styled(Input)(props => ({
     border: '0',
     padding: '0'
   },
-  backgroundColor: '#e4e4e4',
-  borderRadius: '4px 4px 0 0',
+  backgroundColor: '#fff',
   borderBottom: '1px solid #000',
-  color: props.valid ? '#666' : '#fff',
+  color: props.valid ? '#000' : '#a8a8a8',
   fontFamily: 'inherit',
   fontSize: '14px',
   height: '1em',
@@ -41,8 +40,23 @@ const PayButton = styled.button(props => ({
   opacity: props.disabled ? 0.9 : 1,
   fontFamily: 'inherit',
   textTransform: 'uppercase',
-  padding: '12px 48px',
-  width: '100%'
+  padding: '5px 15px',
+  float: 'right'
+}))
+
+const CancelButton = styled.button(props => ({
+  '&:hover': {
+    cursor: !props.disabled ? 'pointer' : 'not-allowed'
+  },
+  backgroundColor: 'white',
+  borderRadius: '4px',
+  border: '1px solid #0083ca',
+  color: '#0083ca',
+  fontSize: '0.875rem',
+  opacity: props.disabled ? 0.9 : 1,
+  fontFamily: 'inherit',
+  textTransform: 'uppercase',
+  padding: '5px 15px'
 }))
 
 const CardNumber = ({
@@ -176,7 +190,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       p={[3, 5] as any}
       justifyContent="center"
     >
-      <Box width={[1, 2 / 4]} mb={[3, 0] as any}>
+      <Box width={[1, 1]} mb={[3, 0] as any}>
         <CardNumber
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('cardNumber')}
@@ -188,7 +202,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         />
       </Box>
 
-      <Box width={[1 / 2, 1 / 4]} pl={2}>
+      <Box width={[1 / 2, 1 / 2]} pl={0}>
         <ExpDate
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('expDate')}
@@ -200,7 +214,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         />
       </Box>
 
-      <Box width={[1 / 2, 1 / 4]} pl={[0, 4] as any}>
+      <Box width={[1 / 2, 1 / 2]} pl={[0, 4] as any}>
         <CardCode
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('cardCode')}
@@ -212,7 +226,16 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         />
       </Box>
 
-      <Box width={[1, 1 / 2] as any} pt={4}>
+      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
+        <CancelButton
+          style={style && style.button}
+          onClick={props.handleCancel}
+        >
+          Cancel
+        </CancelButton>
+      </Box>
+
+      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
         <PayButton
           style={style && style.button}
           disabled={!canSubmit}

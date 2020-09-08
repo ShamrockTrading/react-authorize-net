@@ -48,6 +48,7 @@ export interface InjectedProps extends State {
   amount?: number
   validationErrors: { [K in keyof FormType]: boolean }
   handleSubmit: () => void
+  handleCancel: () => void
   handleFocus: (
     field: keyof FormType,
     ev: React.FocusEvent<HTMLInputElement>
@@ -189,6 +190,10 @@ export default class FormContainer extends React.Component<Props, State> {
     return ev
   }
 
+  handleCancel() {
+    console.log('cancel')
+  }
+
   render() {
     const View =
       this.props.render || this.props.component || this.props.children
@@ -203,6 +208,7 @@ export default class FormContainer extends React.Component<Props, State> {
           handleFocus={this.focusHandler}
           handleBlur={this.blurHandler}
           handleSubmit={this.submitHandler}
+          handleCancel={this.handleCancel}
           validationErrors={FormContainer.runValidations(
             R.pick(['cardCode', 'cardNumber', 'expDate'], this.state.values)
           )}
