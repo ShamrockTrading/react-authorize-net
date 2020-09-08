@@ -31,6 +31,7 @@ export interface Props {
   apiLoginId: string
   onSuccess?: (Response: Accept.Response, formValues: FormType) => void
   onError?: (errors: string[]) => void
+  onCancel?: () => void
   amount?: number
   component?: React.FunctionComponent<InjectedProps>
   render?: React.FunctionComponent<InjectedProps>
@@ -48,7 +49,7 @@ export interface InjectedProps extends State {
   amount?: number
   validationErrors: { [K in keyof FormType]: boolean }
   handleSubmit: () => void
-  handleCancel: () => void
+  handleCancel?: () => void
   handleFocus: (
     field: keyof FormType,
     ev: React.FocusEvent<HTMLInputElement>
@@ -190,10 +191,6 @@ export default class FormContainer extends React.Component<Props, State> {
     return ev
   }
 
-  handleCancel() {
-    console.log('cancel')
-  }
-
   render() {
     const View =
       this.props.render || this.props.component || this.props.children
@@ -208,12 +205,12 @@ export default class FormContainer extends React.Component<Props, State> {
           handleFocus={this.focusHandler}
           handleBlur={this.blurHandler}
           handleSubmit={this.submitHandler}
-          handleCancel={this.handleCancel}
+          handleCancel={this.props.onCancel}
           validationErrors={FormContainer.runValidations(
             R.pick(['cardCode', 'cardNumber', 'expDate'], this.state.values)
           )}
           values={R.pick(
-            ['cardCode', 'cardNumber', 'expDate'],
+            ['cardNumber', 'expDate', 'cardCode'],
             this.state.values
           )}
         />
