@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github:j-em/react-authorize-net"
+    "url": "github:ShamrockTrading/react-authorize-net"
   },
   "keywords": [
     "javascript",
@@ -41,9 +41,9 @@
   "author": "Jeremy Allard <jeremy@allard.io>",
   "license": "MIT",
   "bugs": {
-    "url": "github:j-em/react-authorize-net/issues"
+    "url": "github:ShamrockTrading/react-authorize-net/issues"
   },
-  "homepage": "github:j-em/react-authorize-net",
+  "homepage": "github:ShamrockTrading/react-authorize-net",
   "peerDependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0"

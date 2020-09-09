@@ -3,23 +3,15 @@ import React from 'react'
 import {
   FaCreditCard,
   FaExclamationCircle,
-  FaRegCalendarAlt
+  FaRegCalendarAlt,
+  FaEyeSlash
 } from 'react-icons/fa'
 import { Motion, spring } from 'react-motion'
 import { Box, Flex, Text } from 'rebass'
-import styled, { createGlobalStyle } from 'styled-components'
-
-import robotoFont from 'typeface-roboto/files/roboto-latin-400.woff2'
-
+import styled from 'styled-components'
 import { FormType, InjectedProps } from './FormContainer'
 import Input, { Props } from './Input'
 
-const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: "Roboto";
-    src: url(${robotoFont})
-  }
-`
 const FormInput = styled(Input)(props => ({
   '& input': {
     '&::placeholder': { color: 'inherit' },
@@ -28,12 +20,11 @@ const FormInput = styled(Input)(props => ({
     border: '0',
     padding: '0'
   },
-  backgroundColor: '#7795f8',
-  border: '1px solid #819efc',
-  borderRadius: '4px',
-  color: props.valid ? '#fff' : '#FFC7EE',
+  backgroundColor: '#fff',
+  borderBottom: '1px solid #989898',
+  color: props.valid ? '#000' : '#a8a8a8',
   fontFamily: 'inherit',
-  fontSize: '1em',
+  fontSize: '16px',
   height: '1em',
   padding: '1.5em',
   width: '100%'
@@ -43,23 +34,36 @@ const PayButton = styled.button(props => ({
   '&:hover': {
     cursor: !props.disabled ? 'pointer' : 'not-allowed'
   },
-  backgroundColor: '#f6a4eb',
-  border: '1px solid #2e6da4',
+  backgroundColor: '#0083ca',
   borderRadius: '4px',
-  boxShadow:
-    '0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffb9f6',
   color: 'white',
-  fontSize: '1.1em',
+  fontSize: '0.875rem',
   opacity: props.disabled ? 0.9 : 1,
   fontFamily: 'inherit',
-  padding: '12px 48px',
-  width: '100%'
+  textTransform: 'uppercase',
+  padding: '5px 15px',
+  float: 'right'
+}))
+
+const CancelButton = styled.button(props => ({
+  '&:hover': {
+    cursor: !props.disabled ? 'pointer' : 'not-allowed'
+  },
+  backgroundColor: 'white',
+  borderRadius: '4px',
+  border: '1px solid #0083ca',
+  color: '#0083ca',
+  fontSize: '0.875rem',
+  opacity: props.disabled ? 0.9 : 1,
+  fontFamily: 'inherit',
+  textTransform: 'uppercase',
+  padding: '5px 15px'
 }))
 
 const CardNumber = ({
   type = 'text',
   name = 'cardNumber',
-  placeholder = '1234 5678 9012 3456',
+  placeholder = 'CARD NUMBER',
   ...props
 }: Props) => {
   return (
@@ -132,6 +136,31 @@ const ExpDate = ({
   )
 }
 
+const DisclaimerContainer = styled.div`
+  text-align: center;
+  color: #bababa
+  font-size: 14px
+  margin-top: 20px;
+`
+
+const Disclaimer = (props: {
+  disclaimer?: string
+  style?: React.CSSProperties
+}) => {
+  return (
+    <DisclaimerContainer style={props.style}>
+      {props.disclaimer}
+    </DisclaimerContainer>
+  )
+}
+
+const CardEye = styled(FaEyeSlash)(props => ({
+  color: !props.values ? '#a8a8a8' : '#a8a8a8',
+  position: 'absolute',
+  right: '10px',
+  top: '10px'
+}))
+
 const ErrorComponent = (props: {
   field: keyof FormType
   style?: React.CSSProperties
@@ -168,6 +197,8 @@ type FormComponentProps = InjectedProps & {
 }
 
 const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
+  const [showCreditCard, setShowCreditCard] = React.useState(true)
+
   const canSubmit = R.values(props.validationErrors).every(
     value => value === true
   )
@@ -183,24 +214,38 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       style={style && style.form}
       flexWrap="wrap"
       mb={4}
-      bg="#6772e5"
-      p={[3, 5] as any}
+      bg="#fff"
       justifyContent="center"
     >
-      <GlobalStyle />
+      <Box width={[1, 1]} mb={[3, 0] as any}>
+        <div>
+          <CardEye onClick={() => setShowCreditCard(!showCreditCard)} />
+          <CardNumber
+            type={showCreditCard ? 'text' : 'password'}
+            style={style && style.input}
+            onFocus={R.curry(props.handleFocus)('cardNumber')}
+            onBlur={props.handleBlur}
+            onChange={R.curry(props.handleChange)('cardNumber')}
+            focused={props.focused === 'cardNumber'}
+            valid={props.validationErrors.cardNumber}
+            value={props.values.cardNumber}
+          />
+        </div>
+      </Box>
 
-      <Box width={[1, 2 / 4]} mb={[3, 0] as any}>
-        <CardNumber
+      <Box width={[1 / 2, 1 / 2]} pl={0} mt={3}>
+        <ExpDate
           style={style && style.input}
-          onFocus={R.curry(props.handleFocus)('cardNumber')}
+          onFocus={R.curry(props.handleFocus)('expDate')}
           onBlur={props.handleBlur}
-          onChange={R.curry(props.handleChange)('cardNumber')}
-          focused={props.focused === 'cardNumber'}
-          valid={props.validationErrors.cardNumber}
-          value={props.values.cardNumber}
+          onChange={R.curry(props.handleChange)('expDate')}
+          valid={props.validationErrors.expDate}
+          focused={props.focused === 'expDate'}
+          value={props.values.expDate}
         />
       </Box>
-      <Box width={[1 / 2, 1 / 4]} pl={[0, 4] as any}>
+
+      <Box width={[1 / 2, 1 / 2]} pl={[0, 4] as any} mt={3}>
         <CardCode
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('cardCode')}
@@ -212,25 +257,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         />
       </Box>
 
-      <Box width={[1 / 2, 1 / 4]} pl={2}>
-        <ExpDate
-          style={style && style.input}
-          onFocus={R.curry(props.handleFocus)('expDate')}
-          onBlur={props.handleBlur}
-          onChange={R.curry(props.handleChange)('expDate')}
-          valid={props.validationErrors.expDate}
-          focused={props.focused === 'expDate'}
-          value={props.values.expDate}
-        />
-      </Box>
-      <Box width={[1, 1 / 2] as any} pt={4}>
-        <PayButton
-          style={style && style.button}
-          disabled={!canSubmit}
-          onClick={canSubmit ? props.handleSubmit : undefined}
-        >
-          Pay ${props.amount}
-        </PayButton>
+      <Box width={[1, 1]} pl={[0, 0] as any}>
+        <Disclaimer disclaimer={props.disclaimer} />
       </Box>
 
       <Box width={1} py={4}>
@@ -251,10 +279,27 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
           )}
         </Motion>
       </Box>
+
+      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
+        <CancelButton
+          style={style && style.button}
+          onClick={props.handleCancel}
+        >
+          Cancel
+        </CancelButton>
+      </Box>
+
+      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
+        <PayButton
+          style={style && style.button}
+          disabled={!canSubmit}
+          onClick={canSubmit ? props.handleSubmit : undefined}
+        >
+          Pay ${props.amount}
+        </PayButton>
+      </Box>
     </Flex>
   )
 }
 
-export default styled(FormComponent)({
-  fontFamily: 'system-ui'
-})
+export default FormComponent

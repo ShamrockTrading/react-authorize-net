@@ -31,7 +31,9 @@ export interface Props {
   apiLoginId: string
   onSuccess?: (Response: Accept.Response, formValues: FormType) => void
   onError?: (errors: string[]) => void
+  onCancel?: () => void
   amount?: number
+  disclaimer?: string
   component?: React.FunctionComponent<InjectedProps>
   render?: React.FunctionComponent<InjectedProps>
   children?: React.FunctionComponent<InjectedProps>
@@ -46,8 +48,10 @@ type TPropTypes = {
 
 export interface InjectedProps extends State {
   amount?: number
+  disclaimer?: string
   validationErrors: { [K in keyof FormType]: boolean }
   handleSubmit: () => void
+  handleCancel?: () => void
   handleFocus: (
     field: keyof FormType,
     ev: React.FocusEvent<HTMLInputElement>
@@ -65,6 +69,7 @@ export interface InjectedProps extends State {
 export default class FormContainer extends React.Component<Props, State> {
   static propTypes: Partial<TPropTypes> = {
     amount: PropTypes.number,
+    disclaimer: PropTypes.string,
     apiLoginId: PropTypes.string.isRequired,
     children: PropTypes.func,
     clientKey: PropTypes.string.isRequired,
@@ -203,11 +208,13 @@ export default class FormContainer extends React.Component<Props, State> {
           handleFocus={this.focusHandler}
           handleBlur={this.blurHandler}
           handleSubmit={this.submitHandler}
+          handleCancel={this.props.onCancel}
+          disclaimer={this.props.disclaimer}
           validationErrors={FormContainer.runValidations(
             R.pick(['cardCode', 'cardNumber', 'expDate'], this.state.values)
           )}
           values={R.pick(
-            ['cardCode', 'cardNumber', 'expDate'],
+            ['cardNumber', 'expDate', 'cardCode'],
             this.state.values
           )}
         />
