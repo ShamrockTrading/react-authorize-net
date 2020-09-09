@@ -24,7 +24,7 @@ const FormInput = styled(Input)(props => ({
   borderBottom: '1px solid #989898',
   color: props.valid ? '#000' : '#a8a8a8',
   fontFamily: 'inherit',
-  fontSize: '14px',
+  fontSize: '16px',
   height: '1em',
   padding: '1.5em',
   width: '100%'
@@ -233,7 +233,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         </div>
       </Box>
 
-      <Box width={[1 / 2, 1 / 2]} pl={0}>
+      <Box width={[1 / 2, 1 / 2]} pl={0} mt={3}>
         <ExpDate
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('expDate')}
@@ -245,7 +245,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         />
       </Box>
 
-      <Box width={[1 / 2, 1 / 2]} pl={[0, 4] as any}>
+      <Box width={[1 / 2, 1 / 2]} pl={[0, 4] as any} mt={3}>
         <CardCode
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('cardCode')}
