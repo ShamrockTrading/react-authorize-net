@@ -157,8 +157,8 @@ const Disclaimer = (props: {
 const CardEye = styled(FaEyeSlash)(props => ({
   color: !props.values ? '#a8a8a8' : '#a8a8a8',
   position: 'absolute',
-  right: '74px',
-  top: '74px'
+  right: '10px',
+  top: '10px'
 }))
 
 const ErrorComponent = (props: {
@@ -215,7 +215,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       flexWrap="wrap"
       mb={4}
       bg="#fff"
-      p={[3, 5] as any}
       justifyContent="center"
     >
       <Box width={[1, 1]} mb={[3, 0] as any}>
