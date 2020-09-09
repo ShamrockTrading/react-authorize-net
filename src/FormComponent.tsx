@@ -139,6 +139,7 @@ const ExpDate = ({
 const DisclaimerContainer = styled.div`
   text-align: center;
   color: #bababa
+  font-size: 14px
   margin-top: 20px;
 `
 
