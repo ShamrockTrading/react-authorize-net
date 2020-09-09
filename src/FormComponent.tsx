@@ -160,10 +160,6 @@ const CardEye = styled(FaEyeSlash)(props => ({
   top: '74px'
 }))
 
-const toggleValue = () => {
-  console.log('toggle')
-}
-
 const ErrorComponent = (props: {
   field: keyof FormType
   style?: React.CSSProperties
@@ -200,6 +196,8 @@ type FormComponentProps = InjectedProps & {
 }
 
 const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
+  const [showCreditCard, setShowCreditCard] = React.useState(true)
+
   const canSubmit = R.values(props.validationErrors).every(
     value => value === true
   )
@@ -220,16 +218,19 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       justifyContent="center"
     >
       <Box width={[1, 1]} mb={[3, 0] as any}>
-        <CardEye onClick={toggleValue} />
-        <CardNumber
-          style={style && style.input}
-          onFocus={R.curry(props.handleFocus)('cardNumber')}
-          onBlur={props.handleBlur}
-          onChange={R.curry(props.handleChange)('cardNumber')}
-          focused={props.focused === 'cardNumber'}
-          valid={props.validationErrors.cardNumber}
-          value={props.values.cardNumber}
-        />
+        <div>
+          <CardEye onClick={() => setShowCreditCard(!showCreditCard)} />
+          <CardNumber
+            type={showCreditCard ? 'text' : 'password'}
+            style={style && style.input}
+            onFocus={R.curry(props.handleFocus)('cardNumber')}
+            onBlur={props.handleBlur}
+            onChange={R.curry(props.handleChange)('cardNumber')}
+            focused={props.focused === 'cardNumber'}
+            valid={props.validationErrors.cardNumber}
+            value={props.values.cardNumber}
+          />
+        </div>
       </Box>
 
       <Box width={[1 / 2, 1 / 2]} pl={0}>
@@ -257,7 +258,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       </Box>
 
       <Box width={[1, 1]} pl={[0, 0] as any}>
-        <Disclaimer />
+        <Disclaimer disclaimer={props.disclaimer} />
       </Box>
 
       <Box width={1} py={4}>

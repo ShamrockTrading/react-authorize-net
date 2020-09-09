@@ -20,6 +20,7 @@ storiesOf('FormComponent', module)
       <FormContainer
         {...AuthorizeNetAuthInfo}
         environment="sandbox"
+        disclaimer="This is a disclaimer"
         component={FormComponent}
         amount={25}
       />

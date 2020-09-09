@@ -69,6 +69,7 @@ export interface InjectedProps extends State {
 export default class FormContainer extends React.Component<Props, State> {
   static propTypes: Partial<TPropTypes> = {
     amount: PropTypes.number,
+    disclaimer: PropTypes.string,
     apiLoginId: PropTypes.string.isRequired,
     children: PropTypes.func,
     clientKey: PropTypes.string.isRequired,
