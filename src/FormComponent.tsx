@@ -154,7 +154,7 @@ const Disclaimer = (props: {
 }
 
 const CardEye = styled(FaEyeSlash)(props => ({
-  color: '#a8a8a8',
+  color: !props.values ? '#a8a8a8' : '#a8a8a8',
   position: 'absolute',
   right: '74px',
   top: '74px'
