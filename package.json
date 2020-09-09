@@ -28,7 +28,6 @@
     "version": "run-s test changelog authors && git add .",
     "storybook": "start-storybook -p 9001 -c .storybook --https --ssl-cert server.crt --ssl-key server.key",
     "build-storybook": "build-storybook -c .storybook -o .out",
-    "watch": "watch 'npm run build' ./src"
   },
   "repository": {
     "type": "git",
@@ -61,7 +60,6 @@
     "rebass": "^3.2.2",
     "styled-components": "^4.4.1",
     "styled-system": "^3.2.1",
-    "watch": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
