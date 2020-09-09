@@ -3,7 +3,8 @@ import React from 'react'
 import {
   FaCreditCard,
   FaExclamationCircle,
-  FaRegCalendarAlt
+  FaRegCalendarAlt,
+  FaEyeSlash
 } from 'react-icons/fa'
 import { Motion, spring } from 'react-motion'
 import { Box, Flex, Text } from 'rebass'
@@ -20,7 +21,7 @@ const FormInput = styled(Input)(props => ({
     padding: '0'
   },
   backgroundColor: '#fff',
-  borderBottom: '1px solid #000',
+  borderBottom: '1px solid #989898',
   color: props.valid ? '#000' : '#a8a8a8',
   fontFamily: 'inherit',
   fontSize: '14px',
@@ -62,7 +63,7 @@ const CancelButton = styled.button(props => ({
 const CardNumber = ({
   type = 'text',
   name = 'cardNumber',
-  placeholder = '1234 5678 9012 3456',
+  placeholder = 'CARD NUMBER',
   ...props
 }: Props) => {
   return (
@@ -135,6 +136,34 @@ const ExpDate = ({
   )
 }
 
+const DisclaimerContainer = styled.div`
+  text-align: center;
+  color: #bababa
+  margin-top: 20px;
+`
+
+const Disclaimer = (props: {
+  disclaimer?: string
+  style?: React.CSSProperties
+}) => {
+  return (
+    <DisclaimerContainer style={props.style}>
+      {props.disclaimer}
+    </DisclaimerContainer>
+  )
+}
+
+const CardEye = styled(FaEyeSlash)(props => ({
+  color: '#a8a8a8',
+  position: 'absolute',
+  right: '74px',
+  top: '74px'
+}))
+
+const toggleValue = () => {
+  console.log('toggle')
+}
+
 const ErrorComponent = (props: {
   field: keyof FormType
   style?: React.CSSProperties
@@ -191,6 +220,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
       justifyContent="center"
     >
       <Box width={[1, 1]} mb={[3, 0] as any}>
+        <CardEye onClick={toggleValue} />
         <CardNumber
           style={style && style.input}
           onFocus={R.curry(props.handleFocus)('cardNumber')}
@@ -226,23 +256,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
         />
       </Box>
 
-      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
-        <CancelButton
-          style={style && style.button}
-          onClick={props.handleCancel}
-        >
-          Cancel
-        </CancelButton>
-      </Box>
-
-      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
-        <PayButton
-          style={style && style.button}
-          disabled={!canSubmit}
-          onClick={canSubmit ? props.handleSubmit : undefined}
-        >
-          Pay ${props.amount}
-        </PayButton>
+      <Box width={[1, 1]} pl={[0, 0] as any}>
+        <Disclaimer />
       </Box>
 
       <Box width={1} py={4}>
@@ -262,6 +277,25 @@ const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
             </div>
           )}
         </Motion>
+      </Box>
+
+      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
+        <CancelButton
+          style={style && style.button}
+          onClick={props.handleCancel}
+        >
+          Cancel
+        </CancelButton>
+      </Box>
+
+      <Box width={[1 / 2, 1 / 2] as any} pt={4}>
+        <PayButton
+          style={style && style.button}
+          disabled={!canSubmit}
+          onClick={canSubmit ? props.handleSubmit : undefined}
+        >
+          Pay ${props.amount}
+        </PayButton>
       </Box>
     </Flex>
   )

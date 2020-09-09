@@ -33,6 +33,7 @@ export interface Props {
   onError?: (errors: string[]) => void
   onCancel?: () => void
   amount?: number
+  disclaimer?: string
   component?: React.FunctionComponent<InjectedProps>
   render?: React.FunctionComponent<InjectedProps>
   children?: React.FunctionComponent<InjectedProps>
@@ -47,6 +48,7 @@ type TPropTypes = {
 
 export interface InjectedProps extends State {
   amount?: number
+  disclaimer?: string
   validationErrors: { [K in keyof FormType]: boolean }
   handleSubmit: () => void
   handleCancel?: () => void
@@ -206,6 +208,7 @@ export default class FormContainer extends React.Component<Props, State> {
           handleBlur={this.blurHandler}
           handleSubmit={this.submitHandler}
           handleCancel={this.props.onCancel}
+          disclaimer={this.props.disclaimer}
           validationErrors={FormContainer.runValidations(
             R.pick(['cardCode', 'cardNumber', 'expDate'], this.state.values)
           )}
