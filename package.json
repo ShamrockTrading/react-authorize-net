@@ -1,7 +1,10 @@
 {
-  "name": "react-authorize-net",
-  "version": "0.5.7",
+  "name": "shamrock-react-authorize-net",
+  "version": "0.5.8",
   "description": "React integration for Authorize.Net",
+  "publishConfig": {
+    "registry": "https://nexus.cicd.ryanrts.com/repository/npm-group/"
+  },
   "main": "dist/react-authorize-net.js",
   "module": "dist/react-authorize-net.js",
   "typings": "types/index.d.ts",
