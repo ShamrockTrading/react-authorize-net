@@ -197,7 +197,7 @@ type FormComponentProps = InjectedProps & {
 }
 
 const FormComponent: React.FC<FormComponentProps> = ({ style, ...props }) => {
-  const [showCreditCard, setShowCreditCard] = React.useState(true)
+  const [showCreditCard, setShowCreditCard] = React.useState(false)
 
   const canSubmit = R.values(props.validationErrors).every(
     value => value === true
