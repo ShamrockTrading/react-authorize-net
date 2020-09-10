@@ -3,7 +3,7 @@
   "version": "0.5.8",
   "description": "React integration for Authorize.Net",
   "publishConfig": {
-    "registry": "https://nexus.cicd.ryanrts.com/repository/npm-group/"
+    "registry": "https://nexus.cicd.ryanrts.com/repository/shamrock-npm/"
   },
   "main": "dist/react-authorize-net.js",
   "module": "dist/react-authorize-net.js",
